@@ -29,7 +29,7 @@
     </thead>
     <tbody>
     <!--/*@thymesVar id="customers" type="com.springthymeleaf.controller"*/-->
-    <tr th:each="row,rowStat : ${customers}">
+    <tr th:each="row : ${customers}">
         <td th:text="${row.getName()}"></td>
         <td th:text="${row.getEmail()}"></td>
         <td th:text="${row.getAddress()}"></td>

@@ -25,6 +25,7 @@ public class MailController {
 
 	@RequestMapping("/sendEmail")
 	public String sendEmail(@ModelAttribute("mailBox") MailBox mailBox, final Model model) throws MessagingException {
+		System.out.println("AAAAAAAAAAA");
 		mailService.sendEmail(mailBox.getSubject(), mailBox.getMessage(), mailBox.getRecipientEmail());
 		return "redirect:/";
 	}

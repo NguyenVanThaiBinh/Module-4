@@ -30,7 +30,7 @@ public class CustomerController {
     }
     @PostMapping("/save")
     public String save(Customer customer, RedirectAttributes redirAttrs) {
-        customer.setId((int)(Math.random() * 10000));
+        customer.setId((int)(Math.random() * 100));
         customerService.save(customer);
         redirAttrs.addFlashAttribute("success", "Save successfully!");
 

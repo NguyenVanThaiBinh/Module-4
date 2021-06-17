@@ -28,12 +28,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void save(Customer customer) {
-
+//save in HashMap with ID and Customer
         customers.put(customer.getId(), customer);
     }
 
     @Override
     public Customer findById(int id) {
+//        return Customer with ID
         return customers.get(id);
     }
 

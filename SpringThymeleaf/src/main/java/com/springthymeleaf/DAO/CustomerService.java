@@ -5,6 +5,7 @@ import com.springthymeleaf.model.Customer;
 import java.util.List;
 
 public interface CustomerService {
+//    Print List
     List<Customer> findAll();
 
     void save(Customer customer);

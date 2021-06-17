@@ -25,20 +25,15 @@ public class MailService {
 	public void sendEmail(String subject, String message, String recipientEmail) throws MessagingException {
 		Locale locale = LocaleContextHolder.getLocale();
 
-		// Prepare the evaluation context
-		Context ctx = new Context(locale);
-		ctx.setVariable("message", message);
 
 		// Prepare message using a Spring helper
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
 		mimeMessageHelper.setSubject(subject);
+		mimeMessageHelper.setText(message);
 		mimeMessageHelper.setTo(recipientEmail);
 
-		// Create the HTML body using Thymeleaf
-		String htmlContent = "";
-		htmlContent = templateEngine.process("mail/email_en.html", ctx);
-		mimeMessageHelper.setText(htmlContent, true);
+
 
 		// Send email
 		mailSender.send(mimeMessage);
