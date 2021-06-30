@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.example.demo.exception.RecordNotFoundException;
 import com.example.demo.model.EmployeeEntity;
@@ -27,37 +28,76 @@ public class EmployeeController {
     @Autowired
     ProvinceService provinceService;
 
+
     @GetMapping("/employees")
     public ModelAndView listCustomers() {
         System.out.println("Here!!!!!!!!!!");
-        List<EmployeeEntity> customers = service.getAllEmployees();
+        List<EmployeeEntity> employeeEntityList = service.getAllEmployees();
         List<Province> provinceList = provinceService.getAllProvince();
         ModelAndView modelAndView = new ModelAndView("EmployeeList");
         modelAndView.addObject("EmployeeEntity", new EmployeeEntity());
+        modelAndView.addObject("ListEmployee", employeeEntityList);
         modelAndView.addObject("Province", provinceList);
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public EmployeeEntity createEmployee(@RequestBody EmployeeEntity employeeEntity) throws RecordNotFoundException {
+    public EmployeeEntity createEmployee(@RequestBody EmployeeEntity employeeEntity)
+            throws RecordNotFoundException {
+
 
         System.out.println("Create Done!!!");
         String firstName = employeeEntity.getFirstName();
         String lastName = employeeEntity.getLastName();
         String email = employeeEntity.getEmail();
-        Long province_id = employeeEntity.getProvince().getId();
+
         Province province = employeeEntity.getProvince();
 
-//        service.createEmployee(employeeEntity);
-        System.out.println("Id is: " + province.getName());
-// Chua hieu vi sao getName lai ra ID??????
-        Province province1 = provinceService.findById(Long.parseLong(province.getName()));
 
-        EmployeeEntity employeeEntity1 = new EmployeeEntity(province1,firstName,lastName,email);
-                service.createEmployee(employeeEntity1);
-        System.out.println("Id is: " + province1.getName());
+        Province province1 = provinceService.findById(province.getId());
+        EmployeeEntity employeeEntity1 = new EmployeeEntity(province1, firstName, lastName, email);
+        service.createEmployee(employeeEntity1);
+        employeeEntity.setId(employeeEntity1.getId());
+        employeeEntity.getProvince().setName(province1.getName());
+//
         return employeeEntity;
+    }
+
+    @PostMapping("/delete/{id}")
+    public void deleteCustomer(@RequestParam("id") long id) throws RecordNotFoundException {
+        System.out.println("Da~ xoa!!!!!!!!!!!!!!");
+        service.deleteEmployeeById(id);
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public EmployeeEntity editCustomer(@RequestBody Long id) throws RecordNotFoundException {
+        System.out.println("Edit part 1 came here!!!");
+        EmployeeEntity customer = service.getEmployeeById(id);
+
+        return customer;
+    }
+
+    @RequestMapping(value = "/edit-customer", method = RequestMethod.POST)
+    public EmployeeEntity editCustomer(@RequestBody EmployeeEntity employeeEntity) throws RecordNotFoundException {
+//        Get new Value
+        Long employee_id = employeeEntity.getId();
+        String firstName = employeeEntity.getFirstName();
+        String lastName = employeeEntity.getLastName();
+        String email = employeeEntity.getEmail();
+        Province province = employeeEntity.getProvince();
+        Province province1 = provinceService.findById(province.getId());
+
+//      Set new value
+        EmployeeEntity employeeEntity1 = service.getEmployeeById(employee_id);
+        employeeEntity1.setFirstName(firstName);
+        employeeEntity1.setLastName(lastName);
+        employeeEntity1.setEmail(email);
+        employeeEntity1.setProvince(province);
+        employeeEntity1.getProvince().setName(province1.getName());
+
+        System.out.println("Edit part 2 came here!!!");
+        return employeeEntity1;
     }
 
 //    @GetMapping("/{id}")

@@ -1,10 +1,14 @@
 package com.example.demo.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="TBL_EMPLOYEES")
 public class EmployeeEntity {
+
+
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

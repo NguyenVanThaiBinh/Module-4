@@ -8,6 +8,7 @@ import com.example.demo.exception.RecordNotFoundException;
 import com.example.demo.model.EmployeeEntity;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -20,7 +21,7 @@ public class EmployeeService {
 
     public List<EmployeeEntity> getAllEmployees()
     {
-        List<EmployeeEntity> employeeList = repository.findAll();
+        List<EmployeeEntity> employeeList = repository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
         if(employeeList.size() > 0) {
             return employeeList;

@@ -4,46 +4,154 @@
 <head>
     <meta charset="UTF-8">
     <title>Employee</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css">
+
+
+    <script src="webjars/popper.js/2.5.4/umd/popper.min.js"></script>
     <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
     <script src="webjars/sweetalert2/11.0.17/dist/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="webjars/sweetalert2/11.0.17/dist/sweetalert2.min.css">
-    <link rel="stylesheet" th:href="@{/overwrite.css}" />
     <script th:src="@{/js/ajax.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
+    <link rel="stylesheet" href="webjars/sweetalert2/11.0.17/dist/sweetalert2.min.css">
+    <script src="webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/overwrite.css}"/>
+
+
 </head>
 <body>
+<br>
 <h1>Employee Infomation</h1>
 
 <form id="frmCreateCustomer" th:object="${EmployeeEntity}" method="post">
     <div class="form-row">
 
-        <div  class="form-group col-md-6">
+        <div class="form-group col-md-6">
             <label>First Name</label>
             <input type="text" th:field="*{firstName}" data-th-value="*{firstName}"
                    name="firstName" id="firstName" class="form-control">
         </div>
         <div class="form-group col-md-6">
-            <label>First Name</label>
+            <label>Last Name</label>
             <input type="text" th:field="*{lastName}" data-th-value="*{lastName}"
                    name="lastName" id="lastName" class="form-control">
         </div>
         <div class="form-group col-md-6">
             <label for="email">Email</label>
-            <input type="email" th:value="*{email}" th:field="*{email}" class="form-control"name="email" id="email">
+            <input type="email" th:value="*{email}" th:field="*{email}" class="form-control" name="email" id="email">
         </div>
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label for="email">Province</label>
-            <select id="select-form" class="form-select col-md-6" th:object="${Province}">
+            <br>
+            <select class="select-group col-md-12" style="height: 37px;" id="select-form" th:object="${Province}">
                 <option th:each="p : ${Province}" th:value="${p.id}" th:text="${p.name}"></option>
             </select>
         </div>
-
-
-
     </div>
 
 </form>
-<button class="btn btn-primary"  onclick="getCreate()">Register</button>
+<button class="btn btn-primary" onclick="getCreate()">Register</button>
+<br><br>
+<div class="box-body">
+    <table id="orderItems" class="table table-hover" >
+        <thead  class="thead-dark" >
+        <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Province</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody id="add-row">
+        <th:block th:each="employee : ${ListEmployee}">
+            <tr th:id="${employee.id+'-a'}">
+                <th scope="row" th:text="${employee.id}"></th>
+                <td th:text="${employee.firstName}" th:id="${employee.id+'-firstName'}"></td>
+                <td th:text="${employee.lastName}" th:id="${employee.id+'-lastName'}"></td>
+                <td th:text="${employee.email}" th:id="${employee.id+'-email'}"></td>
+                <td th:text="${employee.province.name}" th:id="${employee.id+'-province'}"></td>
+                <td>
+                    <button class="btn btn-danger" th:attr="value = ${employee.id}"
+                            data-toggle="modal" data-target="#myModal" onclick="getEdit(this.value)">
+                        Edit
+                    </button>
+
+                </td>
+                <td>
+                    <button class="btn btn-primary" th:attr="value = ${employee.id}" onclick="getDelete(this.value)" >
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+
+        <!--    Model Bootstrap-->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Employee</h4>
+
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6" style="display: none">
+                                    <label for="inputId">First Name</label>
+                                    <input type="number" class="form-control" id="inputId">
+                                </div>
+                                <div class="form-group col-md-6" >
+                                    <label for="inputFirstName">First Name</label>
+                                    <input type="text" class="form-control" id="inputFirstName">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputLastName">Last Name</label>
+                                    <input type="text" class="form-control" id="inputLastName">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail">Email</label>
+                                <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Province</label>
+                                <br>
+                                <select class="select-group col-md-12" style="height: 37px;" id="province-select" th:object="${Province}">
+                                    <option th:each="p : ${Province}" th:value="${p.id}" th:text="${p.name}"></option>
+                                </select>
+                            </div>
+
+
+
+
+                        </form>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="submitEdit()" >Edit Now
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </table>
+
+
+</div>
+</div>
 
 </body>
 

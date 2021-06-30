@@ -13,8 +13,8 @@ public class Province {
 
     private String name;
 
-    @OneToMany(targetEntity = EmployeeEntity.class)
-    private List<EmployeeEntity> employeeEntity;
+//    @OneToMany(targetEntity = EmployeeEntity.class)
+//    private List<EmployeeEntity> employeeEntity;
 
     public Province() {
     }
@@ -39,11 +39,11 @@ public class Province {
         this.name = name;
     }
 
-    public List<EmployeeEntity> getCustomers() {
-        return employeeEntity;
-    }
-
-    public void setCustomers(List<EmployeeEntity> customers) {
-        this.employeeEntity = customers;
-    }
+//    public List<EmployeeEntity> getCustomers() {
+//        return employeeEntity;
+//    }
+//
+//    public void setCustomers(List<EmployeeEntity> customers) {
+//        this.employeeEntity = customers;
+//    }
 }
