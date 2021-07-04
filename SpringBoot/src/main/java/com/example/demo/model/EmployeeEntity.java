@@ -18,7 +18,17 @@ public class EmployeeEntity {
     @JoinColumn(name = "province_id")
     private Province province;
 
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public EmployeeEntity() {
     }

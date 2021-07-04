@@ -5,10 +5,15 @@ import java.util.Objects;
 
 import com.example.demo.exception.RecordNotFoundException;
 import com.example.demo.model.EmployeeEntity;
+import com.example.demo.model.Product;
 import com.example.demo.model.Province;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.service.ProductService;
 import com.example.demo.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,16 +33,31 @@ public class EmployeeController {
     @Autowired
     ProvinceService provinceService;
 
+    @Autowired
+    ProductService productService;
+
 
     @GetMapping("/employees")
-    public ModelAndView listCustomers() {
+    public ModelAndView listCustomers(
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
         System.out.println("Here!!!!!!!!!!");
         List<EmployeeEntity> employeeEntityList = service.getAllEmployees();
         List<Province> provinceList = provinceService.getAllProvince();
+        List<Product> productList = productService.getAllProduct();
+
         ModelAndView modelAndView = new ModelAndView("EmployeeList");
         modelAndView.addObject("EmployeeEntity", new EmployeeEntity());
-        modelAndView.addObject("ListEmployee", employeeEntityList);
+//        modelAndView.addObject("ListEmployee", employeeEntityList);
         modelAndView.addObject("Province", provinceList);
+        modelAndView.addObject("Product", productList);
+
+        Pageable pageable = PageRequest.of(0, 5, Sort.by("id").descending());
+        int pageSize = pageable.getPageSize();
+
+        System.out.println("Page number is: " + pageSize);
+
+        modelAndView.addObject("PageNumber",pageSize );
+        modelAndView.addObject("ListEmployee", service.getPageEmployee(pageable));
 
         return modelAndView;
     }
@@ -96,6 +116,7 @@ public class EmployeeController {
         employeeEntity1.setProvince(province);
         employeeEntity1.getProvince().setName(province1.getName());
 
+        service.createEmployee(employeeEntity1);
         System.out.println("Edit part 2 came here!!!");
         return employeeEntity1;
     }

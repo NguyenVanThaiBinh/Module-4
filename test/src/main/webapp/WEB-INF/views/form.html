@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/resource/bulma/css/bulma.min.css">
+    <script src="/resource/js/jquery-3.6.0.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+<h2>ĐĂNG KÝ TIÊM CHỦNG</h2>
+<div class="container is-max-desktop">
+    <div class="notification is-primary">
+        <form id="create-form" >
+            <div class="columns">
+                <div class="column is-half">
+                    <label class="label">FullName</label>
+                    <div class="control ">
+                        <input class="input" type="text" placeholder="e.g Alex Smith">
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <label class="label">CMND</label>
+                    <div class="control " >
+                        <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="field">
+                <label class="label">Mật khẩu</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="e.g Alex Smith">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Giới tính</label>
+                <div class="control">
+                    <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Số điện thoại</label>
+                <div class="control">
+                    <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="e.g Alex Smith">
+                </div>
+            </div>
+
+            <div class="select is-primary">
+                <!--    <td><span>Tỉnh thành (*)</span>-->
+                <div class="select is-primary">
+                    <div>
+                        <select disabled class="form-control" id="province" name="province" onchange="changeFunc();">
+                            <option value="" selected></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="select is-primary">
+                    <div>
+                        <select class="form-control" id="district" name="district" onchange="changeFuncDistrict();">
+                            <option value="" selected>Quận huyện</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="select is-primary">
+                    <div>
+                        <select class="form-control" id="ward" name="ward" aria-placeholder="Quận huyện">
+                            <option value="" selected>Phường xã</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript" src="/resource/js/form.js"></script>
+
+
+<script src="/resource/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<!--<tr>-->
+<!--    <td><span>Tỉnh thành (*)</span>-->
+<!--        <select class="form-control" id="province" name="province" onchange="changeFunc();">-->
+<!--            <option value="" selected></option>-->
+<!--        </select>-->
+<!--    </td>-->
+<!--    <td>Quận/huyện-->
+<!--        <select class="form-control" id="district" name="district" onchange="changeFuncDistrict();">-->
+<!--            <option value="" selected>Quận huyện</option>-->
+<!--        </select>-->
+<!--    </td>-->
+<!--    <td>Phường/xã(*)-->
+<!--        <select class="form-control" id="ward" name="ward" aria-placeholder="Quận huyện">-->
+<!--            <option value="" selected>Phường xã</option>-->
+<!--        </select>-->
+<!--    </td>-->
+<!--</tr>-->
+
+<!--<tr>-->
+<!--    <td>Ngày Tháng Năm Sinh</td>-->
+<!--    <td>-->
+<!--        <select id="day" style="width: 82px;">-->
+<!--        </select>-->
+<!--        <select id="month" style="width: 82px;">-->
+<!--        </select>-->
+<!--        <select id="year" style="width: 82px;">-->
+<!--        </select>-->
+<!--    </td>-->
+<!--</tr>-->
